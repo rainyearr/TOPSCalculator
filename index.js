@@ -5,9 +5,11 @@ let operator = null;
 let shouldResetDisplay = false;
 
 const display = document.getElementById("display");
+const decimalButton = document.getElementById("decimal");
 
 function updateDisplay() {
   display.textContent = displayValue || "0";
+  decimalButton.disabled = displayValue.includes(".");
 }
 
 function clearCalculator() {
@@ -25,6 +27,13 @@ function handleDigitClick(value) {
     shouldResetDisplay = false;
   } else {
     displayValue += value;
+  }
+  updateDisplay();
+}
+
+function handleDecimalClick() {
+  if (!displayValue.includes(".")) {
+    displayValue += ".";
   }
   updateDisplay();
 }
@@ -47,6 +56,11 @@ function handleEqualsClick() {
   firstNumber = null;
   operator = null;
   shouldResetDisplay = true;
+  updateDisplay();
+}
+
+function handleBackspaceClick() {
+  displayValue = displayValue.slice(0, -1);
   updateDisplay();
 }
 
@@ -78,5 +92,11 @@ document.querySelectorAll(".operator").forEach((button) => {
 
 document.getElementById("equals").addEventListener("click", handleEqualsClick);
 document.getElementById("clear").addEventListener("click", clearCalculator);
+document
+  .getElementById("decimal")
+  .addEventListener("click", handleDecimalClick);
+document
+  .getElementById("backspace")
+  .addEventListener("click", handleBackspaceClick);
 
 updateDisplay();
