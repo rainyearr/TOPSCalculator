@@ -79,6 +79,27 @@ function operate(operator, num1, num2) {
   }
 }
 
+function handleKeyboardInput(event) {
+  if (event.key >= "0" && event.key <= "9") {
+    handleDigitClick(event.key);
+  } else if (event.key === ".") {
+    handleDecimalClick();
+  } else if (
+    event.key === "+" ||
+    event.key === "-" ||
+    event.key === "*" ||
+    event.key === "/"
+  ) {
+    handleOperatorClick(event.key);
+  } else if (event.key === "Enter") {
+    handleEqualsClick();
+  } else if (event.key === "Backspace") {
+    handleBackspaceClick();
+  } else if (event.key === "Escape" || event.key.toLowerCase() === "c") {
+    clearCalculator();
+  }
+}
+
 // Add event listeners to buttons
 document.querySelectorAll(".digit").forEach((button) => {
   button.addEventListener("click", () => handleDigitClick(button.textContent));
@@ -98,5 +119,6 @@ document
 document
   .getElementById("backspace")
   .addEventListener("click", handleBackspaceClick);
+document.addEventListener("keydown", handleKeyboardInput);
 
 updateDisplay();
